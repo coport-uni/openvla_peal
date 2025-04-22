@@ -27,6 +27,43 @@ from prismatic.vla.datasets.rlds.utils.data_utils import (
     relabel_bridge_actions,
 )
 
+from typing import Any, Dict
+import numpy as np
+from PIL import Image
+
+def NeuromekaNet_dataset_transform(step: Dict[str, Any]) -> Dict[str, Any]:
+    #     """Maps step from source dataset to target dataset config.
+    #    Input is dict of numpy arrays."""
+    # img = Image.fromarray(step['observation']['image']).resize(
+    #     (128, 128), Image.Resampling.LANCZOS)
+    # transformed_step = {
+    #     'observation': {
+    #         'image': np.array(img),
+    #     },
+    #     'action': np.concatenate(
+    #         [step['action'][:3], step['action'][5:8], step['action'][-2:]]),
+    # }
+
+    # # copy over all other fields unchanged
+    # for copy_key in ['discount', 'reward', 'is_first', 'is_last', 'is_terminal',
+    #                  'language_instruction', 'language_embedding']:
+    #     transformed_step[copy_key] = step[copy_key]
+
+    # return transformed_step
+
+    # transformed_step = {
+    #     'observation': {
+    #         'image': step['observation']['image'],
+    #     },
+    #     'action': step['action'][0:6],
+    # }
+
+    # # copy over all other fields unchanged
+    # for copy_key in ['discount', 'reward', 'is_first', 'is_last', 'is_terminal',
+    #                  'language_instruction', 'language_embedding']:
+    #     transformed_step[copy_key] = step[copy_key]
+
+    return step
 
 def bridge_oxe_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -843,6 +880,7 @@ def libero_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
 
 # === Registry ===
 OXE_STANDARDIZATION_TRANSFORMS = {
+    "NeuromekaNet": NeuromekaNet_dataset_transform,
     "bridge_oxe": bridge_oxe_dataset_transform,
     "bridge_orig": bridge_orig_dataset_transform,
     "bridge_dataset": bridge_orig_dataset_transform,
